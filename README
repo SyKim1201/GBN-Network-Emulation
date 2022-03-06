@@ -1,0 +1,21 @@
+Congestion controlled GBN
+
+To run the program, use following command with according arguments
+Network Emulator:
+./nEmulator.sh <emulator_port_forward> <receiver_address> <receiver_port> <emulator_port_backward> <sender_address> <sender_port> <maximum_delay> <discard_probability> <verbose_mode>
+Receiver:
+./receiver.sh <emulator_address> <emulator_port> <receiver_port> <output_file>
+Sender:
+./sender.sh <emulator_address> <emulator_port> <sender_port> <timeout_interval> <input_file>
+
+
+Notes:
+Programs must be run in order nEmulator, receiver, sender
+nEmulator <emulator_port_forward> == sender <emulator_port>
+nEmulator <emulator_port_backward> == receiver <emulator_port>
+0 <= <discard_probability> <= 1
+<verbose_mode> == 0 or 1
+Open ports can be found using command:
+comm -23 <(seq 1024 65535 | sort) <(ss -tan | awk '{print $4}' | cut -d':' -f2 | grep "[0-9]\{1,5\}" | sort -u) | shuf | head -n 3
+
+Compiled with Python version 3.6.9
